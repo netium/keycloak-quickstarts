@@ -64,11 +64,7 @@ public class PropertyFileUserStorageProvider implements
 
     @Override
     public UserModel getUserByUsername(String username, RealmModel realm) {
-        UserModel adapter = loadedUsers.get(username);
-        if (adapter == null) {
-            adapter = createAdapter(realm, username);
-            loadedUsers.put(username, adapter);
-        }
+        UserModel adapter = createAdapter(realm, username);
         return adapter;
     }
 
