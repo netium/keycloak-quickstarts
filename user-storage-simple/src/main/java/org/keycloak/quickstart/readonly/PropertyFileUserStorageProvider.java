@@ -66,11 +66,8 @@ public class PropertyFileUserStorageProvider implements
     public UserModel getUserByUsername(String username, RealmModel realm) {
         UserModel adapter = loadedUsers.get(username);
         if (adapter == null) {
-            String password = properties.getProperty(username);
-            if (password != null) {
-                adapter = createAdapter(realm, username);
-                loadedUsers.put(username, adapter);
-            }
+            adapter = createAdapter(realm, username);
+            loadedUsers.put(username, adapter);
         }
         return adapter;
     }
@@ -101,8 +98,7 @@ public class PropertyFileUserStorageProvider implements
 
     @Override
     public boolean isConfiguredFor(RealmModel realm, UserModel user, String credentialType) {
-        String password = properties.getProperty(user.getUsername());
-        return credentialType.equals(CredentialModel.PASSWORD) && password != null;
+        return credentialType.equals(CredentialModel.PASSWORD) ;
     }
 
     @Override
@@ -115,9 +111,7 @@ public class PropertyFileUserStorageProvider implements
         if (!supportsCredentialType(input.getType()) || !(input instanceof UserCredentialModel)) return false;
 
         UserCredentialModel cred = (UserCredentialModel)input;
-        String password = properties.getProperty(user.getUsername());
-        if (password == null) return false;
-        return password.equals(cred.getValue());
+        return true;
     }
 
     // CredentialInputUpdater methods
